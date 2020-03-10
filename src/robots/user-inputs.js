@@ -8,7 +8,13 @@ function userInputs(content) {
   }
 
   function askAndReturnPrefix() {
-    const prefixes = ["Who is", "What is", "The history of"];
+    const prefixes = [
+      "Who is",
+      "What is",
+      "The history of",
+      "Quem e",
+      "Historia de"
+    ];
     const selectedPrefixIndex = readline.keyInSelect(
       prefixes,
       "Choose one option: "
