@@ -1,4 +1,5 @@
 const imageDonwloader = require("image-downloader");
+const gm = require("gm").subClass({ imageMagick: true });
 const state = require("./state");
 const google = require("googleapis").google;
 const customSarch = google.customsearch("v1");
@@ -8,8 +9,9 @@ const googleSearchCredentials = require("../credentials/google-search.json");
 async function robot() {
   const content = state.load();
 
-  await fetchImagesofAllSentences(content);
-  await downloadAllImages(content);
+  // await fetchImagesofAllSentences(content);
+  // await downloadAllImages(content);
+  await converAllImages(content);
 
   //   state.save(content);
 
@@ -70,6 +72,54 @@ async function robot() {
     return await imageDonwloader.image({
       url: url,
       dest: `./src/content/${filename}`
+    });
+  }
+
+  async function converAllImages(content) {
+    for (
+      let sentenceIndex = 0;
+      sentenceIndex < content.sentences.length;
+      sentenceIndex++
+    ) {
+      await convertImage(sentenceIndex);
+    }
+  }
+
+  async function convertImage(sentenceIndex) {
+    return new Promise((resolve, reject) => {
+      const inputFile = `./src/content/${sentenceIndex}-original.png[0]`;
+      const outputFile = `./src/content/${sentenceIndex}-converted.png`;
+      const width = 1920;
+      const heigth = 1080;
+
+      gm()
+        .in(inputFile)
+        .out("(")
+        .out("-clone")
+        .out("0")
+        .out("-background", "white")
+        .out("-blur", "0x9")
+        .out("-resize", `${width}x${heigth}^`)
+        .out(")")
+        .out("(")
+        .out("-clone")
+        .out("0")
+        .out("-background", "white")
+        .out("-resize", `${width}x${heigth}`)
+        .out(")")
+        .out("-delete", "0")
+        .out("-gravity", "center")
+        .out("-compose", "over")
+        .out("-composite")
+        .out("-extent", `${width}x${heigth}`)
+        .write(outputFile, error => {
+          if (error) {
+            return reject(error);
+          }
+
+          console.log(`> Image converted ${inputFile}`);
+          resolve();
+        });
     });
   }
 }
