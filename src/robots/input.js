@@ -6,7 +6,7 @@ function input() {
     maximumSentences: 10
   };
 
-  // content.lang = "en";
+  content.lang = "en";
   content.lang = "pt";
 
   content.searchTerm = askAndReturnSearchTerm();
