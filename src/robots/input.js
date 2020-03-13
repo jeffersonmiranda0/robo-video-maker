@@ -3,7 +3,7 @@ const state = require("./state");
 
 function input() {
   const content = {
-    maximumSentences: 10
+    maximumSentences: 7
   };
 
   content.lang = "en";

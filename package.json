@@ -19,6 +19,7 @@
   "homepage": "https://github.com/jeffersonmiranda0/robo-video-maker#readme",
   "dependencies": {
     "algorithmia": "^0.3.10",
+    "child-process": "^1.0.2",
     "fs": "0.0.1-security",
     "gm": "^1.23.1",
     "googleapis": "^47.0.0",
