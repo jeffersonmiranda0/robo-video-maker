@@ -18,7 +18,7 @@ async function robot() {
   async function converAllImages(content) {
     for (
       let sentenceIndex = 0;
-      sentenceIndex < content.sentences.length;
+      sentenceIndex < content.useSentences.length;
       sentenceIndex++
     ) {
       await convertImage(sentenceIndex);
@@ -66,12 +66,12 @@ async function robot() {
   async function createAllSentenceImages(content) {
     for (
       let sentenceIndex = 0;
-      sentenceIndex < content.sentences.length;
+      sentenceIndex < content.useSentences.length;
       sentenceIndex++
     ) {
       await convertSenteceImage(
         sentenceIndex,
-        content.sentences[sentenceIndex].text
+        content.useSentences[sentenceIndex].text
       );
     }
   }
